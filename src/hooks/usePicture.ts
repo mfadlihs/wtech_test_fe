@@ -12,6 +12,7 @@ export const usePictures = (
     queryKey: ["pictures"],
     queryFn: async () => {
       const res = await pictureService.getPictures();
+      if (!res) throw new Error("No response received");
       if (res.status >= 200 && res.status < 300 && res.data) return res.data;
       throw new Error(res.message);
     },
@@ -32,6 +33,7 @@ export const usePictureDetail = (
     queryFn: async () => {
       if (!id) throw new Error("Missing picture id");
       const res = await pictureService.getPictureById(id);
+      if (!res) throw new Error("No response received");
       if (res.status >= 200 && res.status < 300 && res.data) return res.data;
       throw new Error(res.message);
     },
